@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.6.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>ccom.calidadocantidad.springboot</groupId>
+	<artifactId>restful</artifactId>
+	<version>0.0.1</version>
+	<name>restful</name>
+	<description>RESTful para una aplicación de ejemplo CRUD</description>
+
+	<properties>
+		<java.version>13</java.version>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+		<springdoc-openapi-ui.version>1.2.15</springdoc-openapi-ui.version>
+		<modelmapper.version>2.3.0</modelmapper.version>
+	</properties>
+
+	<dependencies>
+	
+		<!-- Utilidades desarrollo -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- Módulo web (necesario para pruebas unitarias) -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+		
+		<!-- Información de la app -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Documentación API REST -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+
+		<!-- Persistencia  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		
+		<!-- Simplificación del código -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- Mapeo de DTOs en Entidades y viceversa -->
+	    <dependency>
+	  		<groupId>org.modelmapper</groupId>
+	  		<artifactId>modelmapper</artifactId>
+	  		<version>${modelmapper.version}</version>
+		</dependency>
+		
+		<!-- Pruebas unitarias -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- Personalización de validaciones -->
+		<dependency>
+   			<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+    	<profile>
+        	<id>local</id>
+			<activation>
+            	<activeByDefault>true</activeByDefault>
+        	</activation>
+        	<properties>
+        	    <activeProfile>local</activeProfile>
+      	 	</properties>
+      	</profile>
+      	<profile>
+        	<id>des</id>
+        	<properties>
+            	<activeProfile>des</activeProfile>
+        	</properties>
+      	</profile>
+      	<profile>
+        	<id>pre</id>
+        	<properties>
+            	<activeProfile>pre</activeProfile>
+        	</properties>
+      	</profile>
+      	<profile>
+       	 	<id>pro</id>
+        	<properties>
+            	<activeProfile>pro</activeProfile>
+        	</properties>
+      	</profile>
+    </profiles>
+	
+</project>
