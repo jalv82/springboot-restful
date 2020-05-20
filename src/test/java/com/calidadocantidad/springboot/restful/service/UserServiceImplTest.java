@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.TestReporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.calidadocantidad.springboot.restful.dto.UserDTO;
 import com.calidadocantidad.springboot.restful.model.User;
@@ -33,6 +36,10 @@ import com.calidadocantidad.springboot.restful.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 
+/**
+ * @author jalv
+ * Integration test of business logic
+ */
 @Slf4j
 @SpringBootTest
 @DisplayName("Integration tests of business logic")
@@ -119,6 +126,45 @@ class UserServiceImplTest {
         testReporter.publishEntry(userFromService.toString());
         log.info(userFromService.toString());
         
+	}
+
+	@Test
+	@Order(2)
+	@DisplayName("Delete nonexistent user. Expected OK.")
+	void deleteNonexistentUser_ok(final TestReporter testReporter) {
+		
+		final Integer idUserNonexistent = -1;
+		
+		// given
+		doThrow(EmptyResultDataAccessException.class).when(this.userRepository).deleteById(idUserNonexistent);
+
+		// when
+		assertThrows(EmptyResultDataAccessException.class, () -> this.userService.remove(idUserNonexistent));
+		
+		// verification
+		verify(this.userRepository, times(1)).deleteById(idUserNonexistent);
+		
+		// logs
+		testReporter.publishEntry("Delete nonexistent user ok");
+		log.info("Delete nonexistent user ok");
+		
+	}
+
+	@Test
+	@Order(3)
+	@DisplayName("Delete user. Expected OK.")
+	void deleteUser_ok(final TestReporter testReporter) {
+		
+		// when
+		this.userService.remove(this.id);
+		
+		// verification
+		verify(this.userRepository, times(1)).deleteById(this.id);
+		
+		// logs
+		testReporter.publishEntry("Delete user ok");
+		log.info("Delete user ok");
+		
 	}
 	
 }

@@ -31,6 +31,10 @@ import com.calidadocantidad.springboot.restful.model.User;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author jalv
+ * Tests of model
+ */
 @Slf4j
 @SpringBootTest
 @DisplayName("Tests of model")
@@ -91,9 +95,9 @@ class UserRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Update user. Expected OK.")
+	@DisplayName("Update user's name. Expected OK.")
 	@Order(1)
-	void updateUser_ok(final TestReporter testReporter) {
+	void updateUserName_ok(final TestReporter testReporter) {
 		
 		// given
 		this.user.setName("Duke");
@@ -115,4 +119,23 @@ class UserRepositoryTest {
 		
 	}
 	
+	@Test
+	@DisplayName("Delete user. Expected OK.")
+	@Order(2)
+	void deleteUser_ok(final TestReporter testReporter) {
+		
+		// given
+		final Optional<User> user2Delete = this.userRepository.findById(this.user.getId());
+		
+		// when
+	    this.userRepository.deleteById(user2Delete.orElse(null).getId());
+        
+        // then
+        assertThat(this.userRepository.count(), is(0L));
+        
+        // logs
+        testReporter.publishEntry("Delete user ok");
+        log.info("Delete user ok");
+		
+	}
 }

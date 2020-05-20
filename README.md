@@ -14,19 +14,23 @@ RESTful for a CRUD example application.
   - Connect it to a database (H2)
 
 #### Frameworks and libraries
-  - Spring Boot v2.2.1.RELEASE
-  - OpenAPI v1.2.15
-  - Lombok v1.18.10
-  - Model Mapper v2.3.0
+
+  - Hamcrest v2.2
   - H2 v1.4.200
-  - JUnit v5.5.2
+  - JUnit v5.6.2
+  - Lombok v1.18.12
+  - Maven v3.6.3
+  - Model Mapper v2.3.0
+  - OpenAPI v1.3.9
+  - Spring Boot v2.3.0.RELEASE
 
 #### API
+
   - Data format: **JSON**
 
 #### Endpoints
 
-API REST: http://localhost:7070/restful/swagger-ui.html
+API REST: http://localhost:7070/restful/swagger-ui/index.html?url=/restful/v3/api-docs
 
   - GET ALL: Get all users from database
   - GET: Specify and user id to get an user
