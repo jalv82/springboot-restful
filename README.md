@@ -14,9 +14,10 @@ RESTful for a CRUD example application.
   - Connect it to a database (H2)
 
 #### Frameworks and libraries
-
-  - Hamcrest v2.2
+ 
   - H2 v1.4.200
+  - Hamcrest v2.2
+  - JMeter v3.1.0
   - JUnit v5.6.2
   - Lombok v1.18.12
   - Maven v3.6.3

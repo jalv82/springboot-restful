@@ -22,6 +22,7 @@
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<springdoc-openapi-ui.version>1.3.9</springdoc-openapi-ui.version>
 		<modelmapper.version>2.3.0</modelmapper.version>
+		<jmeter-maven-plugin.version>3.1.0</jmeter-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -102,6 +103,41 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<!-- Tests de rendimiento -->
+			<plugin>
+			    <groupId>com.lazerycode.jmeter</groupId>
+			    <artifactId>jmeter-maven-plugin</artifactId>
+			    <version>${jmeter-maven-plugin.version}</version>
+			    <executions>
+			        <!-- Generate JMeter configuration -->
+			        <execution>
+			            <id>configuration</id>
+			            <goals>
+			                <goal>configure</goal>
+			            </goals>
+			            <phase>package</phase>
+			        </execution>
+			        <!-- Run JMeter tests -->
+			        <execution>
+			            <id>jmeter-tests</id>
+			            <goals>
+			                <goal>jmeter</goal>
+			            </goals>
+			        </execution>
+			        <!-- Fail build on errors in test -->
+			        <execution>
+			            <id>jmeter-check-results</id>
+			            <goals>
+			                <goal>results</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			    <configuration>
+			        <testFilesDirectory>${project.basedir}/src/test/resources/jmeter</testFilesDirectory>
+			        <resultsDirectory>${project.basedir}</resultsDirectory>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>
