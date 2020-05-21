@@ -5,10 +5,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -52,7 +51,7 @@ class UserServiceImplTest {
 	private UserRepository userRepository;
 
 	@Autowired
-	private UserService userService;
+	private UserService sut;
 
 	private Integer id;
 	private User user;
@@ -81,10 +80,10 @@ class UserServiceImplTest {
 	void findUserById_ok(final TestReporter testReporter) {
 		
 		// given
-		when(this.userRepository.findById(this.id)).thenReturn(this.userOptional);
+		given(this.userRepository.findById(this.id)).willReturn(this.userOptional);
 		
 		// when
-		final UserDTO userFromService = this.userService.get(this.id);
+		final UserDTO userFromService = this.sut.get(this.id);
 		
 		// then
 		final User userFromRepository = this.userOptional.orElse(null);
@@ -94,7 +93,7 @@ class UserServiceImplTest {
 		assertThat(userFromService.getBirthdate(), is(userFromRepository.getBirthdate()));
         
 		// verification
-		verify(this.userRepository, times(1)).findById(this.id);
+		verify(this.userRepository).findById(this.id);
 
 		// logs
         testReporter.publishEntry(userFromService.toString());
@@ -108,10 +107,10 @@ class UserServiceImplTest {
 	void saveUser_ok(final TestReporter testReporter) {
 		
 		// given
-		when(this.userRepository.save(this.user)).thenReturn(this.user);
+		given(this.userRepository.save(this.user)).willReturn(this.user);
 		
 		// when
-		final UserDTO userFromService = this.userService.create(this.userDTO);
+		final UserDTO userFromService = this.sut.create(this.userDTO);
 		
 		// then
 		assertThat(userFromService, is(not(nullValue())));
@@ -120,7 +119,7 @@ class UserServiceImplTest {
 		assertThat(userFromService.getBirthdate(), is(this.user.getBirthdate()));
         
 		// verification
-		verify(this.userRepository, times(1)).save(this.user);
+		verify(this.userRepository).save(this.user);
 
 		// logs
         testReporter.publishEntry(userFromService.toString());
@@ -136,13 +135,13 @@ class UserServiceImplTest {
 		final Integer idUserNonexistent = -1;
 		
 		// given
-		doThrow(EmptyResultDataAccessException.class).when(this.userRepository).deleteById(idUserNonexistent);
-
-		// when
-		assertThrows(EmptyResultDataAccessException.class, () -> this.userService.remove(idUserNonexistent));
+		willThrow(EmptyResultDataAccessException.class).given(this.userRepository).deleteById(idUserNonexistent);
 		
+		// then
+		assertThrows(EmptyResultDataAccessException.class, () -> this.sut.remove(idUserNonexistent));
+
 		// verification
-		verify(this.userRepository, times(1)).deleteById(idUserNonexistent);
+		verify(this.userRepository).deleteById(idUserNonexistent);
 		
 		// logs
 		testReporter.publishEntry("Delete nonexistent user ok");
@@ -156,10 +155,10 @@ class UserServiceImplTest {
 	void deleteUser_ok(final TestReporter testReporter) {
 		
 		// when
-		this.userService.remove(this.id);
+		this.sut.remove(this.id);
 		
 		// verification
-		verify(this.userRepository, times(1)).deleteById(this.id);
+		verify(this.userRepository).deleteById(this.id);
 		
 		// logs
 		testReporter.publishEntry("Delete user ok");

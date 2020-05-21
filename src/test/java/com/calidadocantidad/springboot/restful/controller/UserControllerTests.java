@@ -49,7 +49,7 @@ class UserControllerTests {
 	private UserService userService;
 
 	@Autowired
-    private MockMvc mockMvc;
+    private MockMvc sut;
 	
 	@Autowired
     private ObjectMapper objectMapper;
@@ -102,7 +102,7 @@ class UserControllerTests {
 	@DisplayName("Get all users. Expected OK.")
 	public void getAllUsers_ok() throws Exception {
 				
-		this.mockMvc.perform(MockMvcRequestBuilders
+		this.sut.perform(MockMvcRequestBuilders
 								.get(this.uri)
 								.contentType(MediaType.APPLICATION_JSON)
 								.accept(MediaType.APPLICATION_JSON))
@@ -120,7 +120,7 @@ class UserControllerTests {
 	@DisplayName("Get user by id. Expected OK.")
 	public void getUser_ok() throws Exception {
 				
-		this.mockMvc.perform(MockMvcRequestBuilders
+		this.sut.perform(MockMvcRequestBuilders
 								.get(this.uriWithId)
 								.contentType(MediaType.APPLICATION_JSON)
 								.accept(MediaType.APPLICATION_JSON))
@@ -139,13 +139,13 @@ class UserControllerTests {
 	@DisplayName("Create new user. Expected OK.")
 	public void createUser_ok() throws Exception {
 				
-		this.mockMvc.perform(MockMvcRequestBuilders
-				.post(this.uri)
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.requestCreate))
-	      		.andDo(print())
-	      		.andExpect(status().isCreated());		
+		this.sut.perform(MockMvcRequestBuilders
+								.post(this.uri)
+								.contentType(MediaType.APPLICATION_JSON)
+								.accept(MediaType.APPLICATION_JSON)
+								.content(this.requestCreate))
+					      		.andDo(print())
+					      		.andExpect(status().isCreated());		
 		
 	}
 	
@@ -159,7 +159,7 @@ class UserControllerTests {
 	@DisplayName("Update user. Expected OK.")
 	public void updateUser_ok() throws Exception {
 				
-		this.mockMvc.perform(MockMvcRequestBuilders
+		this.sut.perform(MockMvcRequestBuilders
 								.put(this.uri)
 								.content(this.requestUpdate)
 								.contentType(MediaType.APPLICATION_JSON)
@@ -178,7 +178,7 @@ class UserControllerTests {
 	@DisplayName("Delete user. Expected OK.")
 	public void deleteUser_ok() throws Exception {
 
-		this.mockMvc.perform(MockMvcRequestBuilders
+		this.sut.perform(MockMvcRequestBuilders
 								.delete(this.uriWithId)
 								.contentType(MediaType.APPLICATION_JSON)
 								.accept(MediaType.APPLICATION_JSON))
