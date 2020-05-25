@@ -4,7 +4,7 @@ RESTful for a CRUD example application.
 
 #### Features:
 
-  - Java 13
+  - Java 14
   - HTTP verbs (GET, POST, PUT, DELETE)
   - Entity validation (And DTO object with custom annotation)
   - Global exception handling (And custom exception)
@@ -38,3 +38,7 @@ API REST: http://localhost:7070/restful/swagger-ui/index.html?url=/restful/v3/ap
   - CREATE: Create a new user
   - UPDATE: Update an existing user
   - REMOVE: Remove an existing user
+  
+#### Docker
+  - Create image: _docker build -t springboot-restful:0.0.2 ._
+  - Start container: _docker run -d -p 7070:7070 -t springboot-restful:0.0.2 ._
