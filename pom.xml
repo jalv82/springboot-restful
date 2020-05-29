@@ -135,7 +135,7 @@
 			        </execution>
 			    </executions>
 			    <configuration>
-			        <testFilesDirectory>${project.basedir}/src/test/resources/jmeter</testFilesDirectory>
+			        <testFilesDirectory>${project.basedir}/src/test/jmeter</testFilesDirectory>
 			        <resultsDirectory>${project.basedir}</resultsDirectory>
 			    </configuration>
 			</plugin>

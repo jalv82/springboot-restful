@@ -31,7 +31,7 @@ RESTful for a CRUD example application.
 
 #### Endpoints
 
-API REST: http://localhost:7070/restful/swagger-ui/index.html?url=/restful/v3/api-docs
+API REST: _http://localhost:7070/restful/swagger-ui.html_
 
   - GET ALL: Get all users from database
   - GET: Specify and user id to get an user
