@@ -2,6 +2,8 @@
 
 RESTful for a CRUD example application.
 
+[![](https://github.com/jalv82/springboot-restful/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/jalv82/springboot-restful/actions)
+
 #### Features:
 
   - Java 14
